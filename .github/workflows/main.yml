@@ -21,7 +21,7 @@ jobs:
         run: cat samples/sample.json
 
       - name: Update json
-        uses: ./
+        uses: chromee/docker-github-action-test@master
         id: hello
         with:
           json_path: samples/sample.json
