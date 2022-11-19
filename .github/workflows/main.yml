@@ -1,0 +1,35 @@
+on: [push, workflow_dispatch]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      - name: pwd
+        run: pwd
+
+      - name: ls -la prev checkout
+        run: ls -la
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: ls -la after checkout
+        run: ls -la
+
+      - name: cat json prev fixed
+        run: cat samples/sample.json
+
+      - name: Update json
+        uses: ./
+        id: hello
+        with:
+          json_path: samples/sample.json
+          package_name: "com.unity.package"
+          hash_value: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+      - name: cat json after fixed
+        run: cat samples/sample.json
+
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
